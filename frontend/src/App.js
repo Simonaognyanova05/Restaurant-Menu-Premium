@@ -1,13 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import './App.css';
 import { fetchMenu } from './services/menuApi';
+import AdminPanel from './AdminPanel';
 
 function App() {
+  const [isAdmin, setIsAdmin] = useState(window.location.hash === '#admin');
   const [menu, setMenu] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const handleHashChange = () => setIsAdmin(window.location.hash === '#admin');
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   useEffect(() => {
     fetchMenu()
@@ -27,8 +35,10 @@ function App() {
       .filter((category) => category.dishes.length > 0);
   }, [activeCategory, menu, searchTerm]);
 
-  const featuredDishes = menu.flatMap((category) => category.dishes.filter((dish) => dish.featured).map((dish) => ({ ...dish, category: category.name }))).slice(0, 3);
+  const featuredDishes = menu.flatMap((category) => category.dishes.filter((dish) => dish.isFeatured).map((dish) => ({ ...dish, category: category.name }))).slice(0, 3);
   const scrollToMenu = () => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' });
+
+  if (isAdmin) return <AdminPanel />;
 
   return (
     <main>
@@ -39,8 +49,8 @@ function App() {
         {featuredDishes.length > 0 && !searchTerm && activeCategory === 'all' && <section className="featured" aria-label="Chef's selection"><div className="featured-label"><span>01</span><p className="eyebrow">Chef's selection</p></div><div className="featured-grid">{featuredDishes.map((dish) => <div className="featured-dish" key={dish._id}><div className="dish-image" style={{ backgroundImage: `url(${dish.imageUrl || 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85'})` }} /><p className="dish-category">{dish.category}</p><h3>{dish.name}</h3><span className="price">{Number(dish.price).toFixed(2)} <small>{dish.currency}</small></span></div>)}</div></section>}
         <div className="menu-controls"><div className="category-tabs" role="tablist" aria-label="Menu categories"><button className={activeCategory === 'all' ? 'active' : ''} type="button" onClick={() => setActiveCategory('all')}>All dishes</button>{menu.map((category) => <button className={activeCategory === category._id ? 'active' : ''} type="button" key={category._id} onClick={() => setActiveCategory(category._id)}>{category.name}</button>)}</div><label className="search-box"><span aria-hidden="true">⌕</span><input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search menu" aria-label="Search menu" /></label></div>
         {isLoading && <p className="state-message">Preparing tonight's selection<span className="loading-dots">...</span></p>}{error && <p className="state-message error-message">{error}</p>}{!isLoading && !error && menu.length === 0 && <p className="state-message">Our menu is being prepared. Please return shortly.</p>}{!isLoading && !error && menu.length > 0 && filteredMenu.length === 0 && <p className="state-message">No dishes match your search.</p>}
-        <div className="menu-list" aria-label="Restaurant menu">{filteredMenu.map((category, categoryIndex) => <article className="category" key={category._id}><div className="category-heading"><span className="category-number">0{categoryIndex + 1}</span><div><h2>{category.name}</h2>{category.description && <p>{category.description}</p>}</div></div><div className="dish-list">{category.dishes.map((dish) => <div className={`dish ${dish.available === false ? 'unavailable' : ''}`} key={dish._id}><div><h3>{dish.name}</h3><p>{dish.description}</p>{dish.allergens?.length > 0 && <small>Contains: {dish.allergens.join(', ')}</small>}{dish.available === false && <small className="availability">Currently unavailable</small>}</div><span className="price">{Number(dish.price).toFixed(2)} <small>{dish.currency}</small></span></div>)}</div></article>)}</div>
-      </section><footer><span className="wordmark">AURELIA <span>/</span> 21</span><span>25 Oborishte · Sofia</span><span>Instagram ↗</span></footer>
+        <div className="menu-list" aria-label="Restaurant menu">{filteredMenu.map((category, categoryIndex) => <article className="category" key={category._id}><div className="category-heading"><span className="category-number">0{categoryIndex + 1}</span><div><h2>{category.name}</h2>{category.description && <p>{category.description}</p>}</div></div><div className="dish-list">{category.dishes.map((dish) => <div className={`dish ${dish.isAvailable === false ? 'unavailable' : ''}`} key={dish._id}><div><h3>{dish.name}</h3><p>{dish.description}</p>{dish.allergens?.length > 0 && <small>Contains: {dish.allergens.join(', ')}</small>}{dish.isAvailable === false && <small className="availability">Currently unavailable</small>}</div><span className="price">{Number(dish.price).toFixed(2)} <small>{dish.currency}</small></span></div>)}</div></article>)}</div>
+      </section><footer><span className="wordmark">AURELIA <span>/</span> 21</span><span>25 Oborishte · Sofia</span><a href="#admin">Admin ↗</a></footer>
     </main>
   );
 }

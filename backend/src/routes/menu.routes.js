@@ -3,6 +3,7 @@ const { requireAdmin } = require('../middlewares/auth.middleware');
 const menuController = require('../controllers/menu.controller');
 
 router.get('/', menuController.getMenu);
+router.get('/admin', requireAdmin, menuController.getAdminMenu);
 router.post('/categories', requireAdmin, menuController.createCategory);
 router.patch('/categories/:id', requireAdmin, menuController.updateCategory);
 router.delete('/categories/:id', requireAdmin, menuController.deleteCategory);

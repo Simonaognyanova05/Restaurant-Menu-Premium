@@ -6,6 +6,10 @@ const getMenu = asyncHandler(async (req, res) => {
   res.json({ success: true, data: await menuService.listMenu() });
 });
 
+const getAdminMenu = asyncHandler(async (req, res) => {
+  res.json({ success: true, data: await menuService.listAdminMenu() });
+});
+
 const createCategory = asyncHandler(async (req, res) => {
   res.status(201).json({ success: true, data: await menuService.createCategory(req.body) });
 });
@@ -32,4 +36,4 @@ const deleteDish = asyncHandler(async (req, res) => {
   res.status(204).send();
 });
 
-module.exports = { getMenu, createCategory, updateCategory, deleteCategory, createDish, updateDish, deleteDish };
+module.exports = { getMenu, getAdminMenu, createCategory, updateCategory, deleteCategory, createDish, updateDish, deleteDish };
