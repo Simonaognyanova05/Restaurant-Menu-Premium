@@ -12,5 +12,5 @@ test('renders the Aurelia menu shell', async () => {
   window.location.hash = '';
   render(<App />);
   expect(screen.getByText(/a quiet kind/i)).toBeInTheDocument();
-  expect(await screen.findByText(/our menu is being prepared/i)).toBeInTheDocument();
+  expect(await screen.findByText(/менюто ни се подготвя/i)).toBeInTheDocument();
 });
