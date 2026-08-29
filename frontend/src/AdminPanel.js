@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './Admin.css';
 import { createCategory, createDish, deleteCategory, deleteDish, fetchAdminMenu, loginAdmin, updateCategory, updateDish } from './services/menuApi';
 
@@ -18,12 +18,17 @@ function AdminPanel() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const loadMenu = async () => {
+  const loadMenu = useCallback(async () => {
     setLoading(true);
     try { setMenu(await fetchAdminMenu()); setError(''); } catch (loadError) { setError(loadError.message); } finally { setLoading(false); }
-  };
+  }, []);
 
-  useEffect(() => { if (token) loadMenu(); }, [token]);
+  useEffect(() => {
+    if (token) loadMenu();
+    const handleExpiredSession = () => setToken(null);
+    window.addEventListener('admin-session-expired', handleExpiredSession);
+    return () => window.removeEventListener('admin-session-expired', handleExpiredSession);
+  }, [loadMenu, token]);
 
   const runAction = async (action, successMessage) => {
     setLoading(true); setError(''); setMessage('');
@@ -52,7 +57,11 @@ function AdminPanel() {
     setCategory(emptyCategory); setEditingCategory(null);
   };
 
-  const startEditDish = (item, categoryId) => setDish({ ...item, category: categoryId, allergens: toList(item.allergens), dietaryTags: toList(item.dietaryTags) }) || setEditingDish(item._id);
+  const startEditDish = (item, categoryId) => {
+    setDish({ ...item, category: categoryId, allergens: toList(item.allergens), dietaryTags: toList(item.dietaryTags) });
+    setEditingDish(item._id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const startEditCategory = (item) => { setCategory(item); setEditingCategory(item._id); };
   const logout = () => { localStorage.removeItem('adminToken'); setToken(null); };
 

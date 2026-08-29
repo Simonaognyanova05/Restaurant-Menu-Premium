@@ -17,6 +17,10 @@ const request = async (path, options = {}) => {
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('adminToken') || ''}`, ...options.headers },
   });
   const result = response.status === 204 ? {} : await response.json();
+  if (response.status === 401 && localStorage.getItem('adminToken')) {
+    localStorage.removeItem('adminToken');
+    window.dispatchEvent(new Event('admin-session-expired'));
+  }
   if (!response.ok) throw new Error(result.message || 'Request failed');
   return result.data;
 };
