@@ -7,7 +7,11 @@ const connectDatabase = async () => {
     throw new Error('MONGODB_URI is not configured');
   }
 
-  await mongoose.connect(MONGODB_URI);
+  try {
+    await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 10000 });
+  } catch (error) {
+    throw new Error(`MongoDB connection failed: ${error.message}`);
+  }
   console.log('MongoDB connected');
 };
 

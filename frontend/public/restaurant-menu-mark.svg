@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Restaurant menu mark</title>
+  <desc id="desc">A universal fine dining plate and cutlery mark</desc>
+  <rect width="512" height="512" fill="#1b2d25"/>
+  <circle cx="256" cy="256" r="211" fill="none" stroke="#b56e43" stroke-width="8"/>
+  <circle cx="256" cy="270" r="93" fill="none" stroke="#f3f1eb" stroke-width="10"/>
+  <circle cx="256" cy="270" r="61" fill="none" stroke="#b56e43" stroke-width="6"/>
+  <path d="M151 139v91M176 139v91M201 139v91M151 184h50M176 139v224" fill="none" stroke="#f3f1eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M361 139v224M361 139c-26 21-39 50-39 86s13 64 39 86" fill="none" stroke="#f3f1eb" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

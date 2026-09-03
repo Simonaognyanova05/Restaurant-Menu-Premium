@@ -42,7 +42,7 @@ function App() {
 
   return (
     <main>
-      <nav className="topbar" aria-label="Основна навигация"><a className="wordmark" href="#top">AURELIA <span>/</span> 21</a><div className="topbar-links"><a href="#menu">Меню</a><a href="#experience">Нашата философия</a><button className="reserve-button" type="button" onClick={() => window.alert('Обадете се на +359 2 951 21 21, за да резервирате маса.')}>Резервирай маса <span aria-hidden="true">↗</span></button></div></nav>
+      <nav className="topbar" aria-label="Основна навигация"><a className="wordmark" href="#top">AURELIA <span>/</span> 21</a><div className="topbar-links"><a href="#menu">Меню</a><a href="#experience">Нашата философия</a></div></nav>
       <section className="hero" id="top"><div className="hero-copy"><p className="eyebrow">София · От 2021</p><h1>Тихият вид<br /><em>на лукса.</em></h1><p className="hero-intro">Сезонно меню, вдъхновено от българския пейзаж и поднесено с внимание.</p><button className="text-link" type="button" onClick={scrollToMenu}>Разгледай менюто <span aria-hidden="true">↓</span></button></div><p className="hero-note">Маса на шеф-готвача<br />Вторник — събота</p></section>
       <section className="experience-band" id="experience"><p className="eyebrow">Подходът на Aurelia</p><p className="statement">Оставяме съставката<br /><em>да води.</em></p><p className="band-copy">Менюто ни следва сезоните. Всяка чиния е баланс от местни продукти, прецизна техника и точното количество изненада.</p></section>
       <section className="menu-shell" id="menu"><div className="section-heading"><div><p className="eyebrow">Актуално меню</p><h2>От кухнята</h2></div><p className="menu-meta">А ла карт · 12:00 — 23:00<br />Моля, предвидете 20 минути за подготовка.</p></div>

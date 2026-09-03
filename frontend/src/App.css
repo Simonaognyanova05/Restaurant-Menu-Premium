@@ -75,15 +75,21 @@ footer { background: var(--green); color: #f3f1eb; display: flex; justify-conten
   .menu-shell { padding: 5rem 1.25rem 3rem; }
   .section-heading { align-items: start; display: block; margin-bottom: 3rem; }
   .menu-meta { margin-top: 1.5rem; text-align: left; }
-  .featured-grid { grid-template-columns: 1fr; }
-  .featured-dish:not(:first-child) { display: none; }
-  .dish-image { height: 270px; }
+  .featured { padding-bottom: 3.5rem; }
+  .featured-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+  .featured-dish { display: block; }
+  .dish-image { height: 220px; }
   .menu-controls { align-items: start; display: block; }
-  .category-tabs { margin-bottom: 1rem; }
-  .search-box input { width: 100%; }
+  .category-tabs { margin: 0 -1.25rem 1rem; padding: 0 1.25rem .5rem; scrollbar-width: thin; }
+  .category-tabs button { flex: 0 0 auto; font-size: .7rem; }
+  .search-box { width: 100%; }
+  .search-box input { flex: 1; min-width: 0; width: auto; }
   .category-heading { gap: 1rem; grid-template-columns: 30px 1fr; }
   .category-heading h2 { font-size: 2.2rem; }
-  .dish { gap: 1rem; margin-left: 30px; }
-  .dish p { font-size: .8rem; }
+  .dish { align-items: start; gap: .8rem; margin-left: 30px; }
+  .dish > div { min-width: 0; }
+  .dish h3 { font-size: 1.15rem; }
+  .dish p { font-size: .8rem; overflow-wrap: anywhere; }
+  .dish .price { padding-top: .15rem; }
   footer { align-items: start; flex-direction: column; gap: 1rem; padding: 2rem 1.25rem; }
 }
