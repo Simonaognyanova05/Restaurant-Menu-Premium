@@ -10,7 +10,8 @@ beforeEach(() => {
 
 test('renders the Aurelia menu shell', async () => {
   window.location.hash = '';
+  localStorage.clear();
   render(<App />);
-  expect(screen.getByText(/a quiet kind/i)).toBeInTheDocument();
+  expect(screen.getByText(/тихият вид/i)).toBeInTheDocument();
   expect(await screen.findByText(/менюто ни се подготвя/i)).toBeInTheDocument();
 });

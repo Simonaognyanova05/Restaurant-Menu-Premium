@@ -1,4 +1,5 @@
 node_modules/
+marketing/
 .env
 .env.*
 !.env.example
